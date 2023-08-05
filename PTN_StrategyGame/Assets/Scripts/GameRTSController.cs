@@ -11,6 +11,7 @@ public class GameRTSController : MonoBehaviour
     private Vector3 startPosition;
     private List<UnitRTS> selectedUnitRTSList;
 
+
     private void Awake()
     {
         selectedUnitRTSList= new List<UnitRTS>();
@@ -53,6 +54,7 @@ public class GameRTSController : MonoBehaviour
             foreach(UnitRTS unitRTS in selectedUnitRTSList)
             {
                 unitRTS.SetSelectedVisible(false);
+                unitRTS.FlipCharacter(false);
             }
 
             selectedUnitRTSList.Clear();
@@ -64,6 +66,7 @@ public class GameRTSController : MonoBehaviour
                 {
                     unitRTS.SetSelectedVisible(true);
                     selectedUnitRTSList.Add(unitRTS);
+                    unitRTS.FlipCharacter(true);
                 }
             }
             Debug.Log(selectedUnitRTSList.Count);

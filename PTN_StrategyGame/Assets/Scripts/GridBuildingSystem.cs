@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
@@ -20,6 +19,9 @@ public class GridBuildingSystem : MonoBehaviour
     private BoundsInt prevArea;
 
     private bool isPlaced = false; // Başlangıçta henüz bir bina yerleştirilmediği varsayılır.
+    private bool isPlacing = false; // Tıklanarak yerleştirme modunu temsil eder
+    private GameObject buildingPrefab; // Yerleştirilecek objenin prefabı
+    private UnityEngine.Vector3 targetPosition;
 
     #region Unity Methods
     private void Awake()
@@ -43,42 +45,20 @@ public class GridBuildingSystem : MonoBehaviour
             return;
         }
 
-        if(Input.GetMouseButtonDown(0)) 
+        if (isPlacing)
         {
-            if (EventSystem.current.IsPointerOverGameObject(0))
-            {
-                Debug.Log("hey");
-                return;
-            }
-
-            if(!temp.Placed)
+            HandleObjectPlacement();
+        }
+        else if (Input.GetMouseButtonDown(0)) // Eğer butona basılmışsa
+        {
+            if (!EventSystem.current.IsPointerOverGameObject(0))
             {
                 UnityEngine.Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector3Int cellPos = gridLayout.LocalToCell(touchPos);
-                if (prevPos != cellPos)
-                {
-                    temp.transform.localPosition = gridLayout.CellToLocalInterpolated(cellPos 
-                        + new UnityEngine.Vector3(.5f, .5f, 0f)); //Vector
-                    prevPos =  cellPos;
-                    FollowBuilding();
-                }
-
+                targetPosition = gridLayout.CellToLocalInterpolated(gridLayout.WorldToCell(touchPos));
+                isPlacing = true;
             }
         }
 
-        else if(Input.GetKeyDown(KeyCode.Space))
-        {
-            if(temp.CanBePlaced())
-            {
-                temp.Place();
-            }
-            isPlaced = false;
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ClearArea();
-            Destroy(temp.gameObject);
-        }
     }
 
     #endregion
@@ -116,15 +96,50 @@ public class GridBuildingSystem : MonoBehaviour
 
     #region Building Placement
 
-    public void InitializeWithBuilding(GameObject building) 
+    private void HandleObjectPlacement()
+    {
+        if (!temp)
+        {
+            return;
+        }
+
+        UnityEngine.Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3Int cellPos = gridLayout.LocalToCell(touchPos);
+
+        if (prevPos != cellPos)
+        {
+            temp.transform.localPosition = gridLayout.CellToLocalInterpolated(cellPos
+                + new UnityEngine.Vector3(.5f, .5f, 0f)); //Vector
+            prevPos = cellPos;
+            FollowBuilding();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (temp.CanBePlaced())
+            {
+                temp.Place();
+                isPlacing = false; // Yerleştirme modunu kapat
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ClearArea();
+            Destroy(temp.gameObject);
+            isPlacing = false; // Yerleştirme modunu kapat
+        }
+    }
+
+    public void StartPlacing(GameObject buildingPrefab)
     {
         if (!isPlaced) // Eğer henüz bir bina yerleştirilmediyse...
         {
-            temp = Instantiate(building, UnityEngine.Vector3.zero, UnityEngine.Quaternion.identity).GetComponent<Building>();
+            this.buildingPrefab = buildingPrefab;
+            temp = Instantiate(buildingPrefab, UnityEngine.Vector3.zero, UnityEngine.Quaternion.identity).GetComponent<Building>();
 
             FollowBuilding();
 
-            isPlaced = true; // Bina yerleştirildi olarak işaretlenir.
+            isPlacing = true; // Yerleştirme modunu aç
         }
     }
 

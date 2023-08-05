@@ -34,8 +34,11 @@ namespace Pathfinding {
 		
 		public void SetMovePosition(Transform movePosition)
 		{
-			this.target = movePosition;
-            ai.destination = target.position;
+            if (ai != null && movePosition != null)
+            {
+                this.target = movePosition;
+                ai.destination = target.position;
+            }
         }
 
         /// <summary>Updates the AI's destination every frame</summary>

@@ -7,12 +7,22 @@ public class UnitRTS : MonoBehaviour
 {
     private GameObject selectedGameObject;
     private AIDestinationSetter movePosition;
+    private CharacterFlip characterFlip;
+
 
     private void Awake()
     {
         selectedGameObject = transform.Find("Selected").gameObject;
         movePosition = GetComponent<AIDestinationSetter>();
         SetSelectedVisible(false);
+
+        characterFlip = this.gameObject.GetComponentInChildren<CharacterFlip>();
+        FlipCharacter(false);
+    }
+
+    public void FlipCharacter(bool visible)
+    {
+        characterFlip.enabled = visible;
     }
 
     public void SetSelectedVisible(bool visible)

@@ -40,7 +40,10 @@ public class Building : MonoBehaviour
         areaTemp.position = positionInt;
 
         if (GridBuildingSystem.instance.CanTakeArea(areaTemp))
+        {
             return true;
+
+        }
         return false;
     }
     public void Place()

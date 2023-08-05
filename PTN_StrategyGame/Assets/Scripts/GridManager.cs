@@ -23,7 +23,7 @@ public class GridManager : MonoBehaviour
 
     void GenerateGrid()
     {
-        float halfTileSize = 0.5f;
+        float halfTileSize = 0.27f;
 
         for (int i = 0; i < width * 2; i++)
         {
@@ -32,8 +32,6 @@ public class GridManager : MonoBehaviour
                 var spawnedTile = Instantiate(tilePrefab, new Vector3(i * halfTileSize, j * halfTileSize), Quaternion.identity);
                 spawnedTile.name = $"Tile {i} {j}";
                 spawnedTile.transform.parent = gridContainer; // Oluşturulan Tile nesnesi, alt nesne olarak ayarlanır.
-
-                var isOffset = (i % 2 == 0 && j % 2 != 0) || (i % 2 != 0 && j % 2 == 0);
                 //spawnedTile.Init(isOffset);
             }
         }
