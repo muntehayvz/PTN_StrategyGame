@@ -17,31 +17,49 @@ namespace Pathfinding {
 		/// <summary>The object that the AI should move to</summary>
 		public Transform target;
 		IAstarAI ai;
+        [SerializeField] private Animator anim;
 
-		void OnEnable () {
+        void OnEnable () {
 			ai = GetComponent<IAstarAI>();
-			// Update the destination right before searching for a path as well.
-			// This is enough in theory, but this script will also update the destination every
-			// frame as the destination is used for debugging and may be used for other things by other
-			// scripts as well. So it makes sense that it is up to date every frame.
-			if (ai != null) ai.onSearchPath += Update;
+            // Update the destination right before searching for a path as well.
+            // This is enough in theory, but this script will also update the destination every
+            // frame as the destination is used for debugging and may be used for other things by other
+            // scripts as well. So it makes sense that it is up to date every frame.
+            if (ai != null) ai.onSearchPath += Update;
 		}
 
 		void OnDisable () {
 			if (ai != null) ai.onSearchPath -= Update;
 		}
+		
+		public void SetMovePosition(Transform movePosition)
+		{
+			this.target = movePosition;
+            ai.destination = target.position;
+        }
 
         /// <summary>Updates the AI's destination every frame</summary>
         private void Update()
         {
-            if (Input.GetMouseButtonDown(1)) // Sol tıklama kontrolü
+            if(!ai.isStopped && ai.pathPending)
+            {
+                anim.SetBool("isWalking", true);
+            }
+            if(ai.isStopped || ai.reachedDestination)
+            {
+                anim.SetBool("isWalking", false);
+
+            }
+
+            /*if (Input.GetMouseButtonDown(1)) // Sol tıklama kontrolü
             {
                 Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
-                if (hit.collider != null)
+                if (hit.collider != null) 
                 {
                     Transform newTarget = hit.transform; // Tıklanan noktanın Transform'u
+                    Debug.Log(newTarget);
 
                     if (ai != null)
                     {
@@ -49,7 +67,7 @@ namespace Pathfinding {
                     }
 					ai.destination = target.position;
                 }
-            }
+            }*/
         }
     }
 }
