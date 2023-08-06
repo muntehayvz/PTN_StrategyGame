@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Building : MonoBehaviour
@@ -13,7 +14,10 @@ public class Building : MonoBehaviour
     public string buildingName;
 
     [SerializeField]
-    public GameObject image;
+    public GameObject buildImage;
+
+    [SerializeField]
+    public GameObject productImage;
 
     [SerializeField]
     public UnityEngine.Vector2 dimensions;
@@ -31,6 +35,17 @@ public class Building : MonoBehaviour
     private void OnMouseDown()
     {
         Debug.Log("Bina Adı: " + buildingName);
+
+        UIManager.Instance.UpdateBuildingNameAndImage(buildingName, buildImage.GetComponent<SpriteRenderer>());
+
+        if(buildingName == "Barrack")
+        {
+            UIManager.Instance.UpdateProductionImage(productImage.GetComponentInChildren<SpriteRenderer>());
+        }
+        else
+        {
+            UIManager.Instance.ClearProductionImage();
+        }
     }
 
     public bool CanBePlaced()
@@ -53,8 +68,16 @@ public class Building : MonoBehaviour
         areaTemp.position = positionInt;
 
         Placed = true;
-        GridBuildingSystem.instance.TakeArea(areaTemp);
-        AstarPath.active.Scan();
+        if(buildingName != "Soldier")
+        {
+            GridBuildingSystem.instance.TakeArea(areaTemp);
+            AstarPath.active.Scan();
+        }
+        else
+        {
+            GridBuildingSystem.instance.ClearArea();
+        }
+        
     }
     #endregion
 }

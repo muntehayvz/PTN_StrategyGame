@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 5279719765834677987}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.063, y: -0.012000009, z: 0}
-  m_LocalScale: {x: -0.058863, y: -0.058863, z: -0.058863}
+  m_LocalScale: {x: -0.04, y: -0.04, z: -0.04}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7128901832523780825}
@@ -110,7 +110,7 @@ Transform:
   m_GameObject: {fileID: 6636996004420595342}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.063, y: 0.006, z: 0}
-  m_LocalScale: {x: 0.428859, y: 0.16895454, z: 0.028159086}
+  m_LocalScale: {x: 0.34, y: 0.13394739, z: 0.022324562}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7128901832523780825}
@@ -195,8 +195,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7128901832191732848}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 0.499, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: -0.05, y: 0.377, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7128901832523780825}
@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 7128901832523780827}
   - component: {fileID: 998410139}
   - component: {fileID: 998410138}
-  - component: {fileID: 998410140}
+  - component: {fileID: 1829202627242771874}
   m_Layer: 1
   m_Name: Unit
   m_TagString: Untagged
@@ -424,7 +424,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.016575396, y: 0.038501322}
+  m_Offset: {x: -0.058621585, y: 0.108937025}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -435,9 +435,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.22607672, y: 0.22461975}
+  m_Size: {x: 0.2609495, y: 0.26650047}
   m_EdgeRadius: 0
---- !u!114 &998410140
+--- !u!114 &1829202627242771874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -453,5 +453,6 @@ MonoBehaviour:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 1, y: 1, z: 1}
   buildingName: Soldier
-  image: {fileID: 7128901832191732848}
+  buildImage: {fileID: 7128901832523780806}
+  productImage: {fileID: 0}
   dimensions: {x: 1, y: 1}

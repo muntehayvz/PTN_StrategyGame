@@ -134,7 +134,8 @@ MonoBehaviour:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 3, y: 3, z: 1}
   buildingName: SoldierTent
-  image: {fileID: 280073070980502343}
+  buildImage: {fileID: 280073070980502343}
+  productImage: {fileID: 0}
   dimensions: {x: 4, y: 4}
 --- !u!61 &-2315039420410888758
 BoxCollider2D:

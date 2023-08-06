@@ -44,6 +44,10 @@ public class GridBuildingSystem : MonoBehaviour
         {
             return;
         }
+        if (EventSystem.current.IsPointerOverGameObject(0))
+        {
+            return;
+        }
 
         if (isPlacing)
         {
@@ -55,10 +59,9 @@ public class GridBuildingSystem : MonoBehaviour
             {
                 UnityEngine.Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 targetPosition = gridLayout.CellToLocalInterpolated(gridLayout.WorldToCell(touchPos));
-                isPlacing = true;
+                //isPlacing = true;
             }
         }
-
     }
 
     #endregion
@@ -143,7 +146,7 @@ public class GridBuildingSystem : MonoBehaviour
         }
     }
 
-    private void ClearArea()
+    public void ClearArea()
     {
         TileBase[] toClear = new TileBase[prevArea.size.x * prevArea.size.y * prevArea.size.z];
         FillTiles(toClear, TileType.Empty);
@@ -204,5 +207,6 @@ public class GridBuildingSystem : MonoBehaviour
         Green,
         Red
     }
+
 
 }
