@@ -60,4 +60,5 @@ public class UIManager : MonoBehaviour
     {
         productionRenderer.sprite = null;
     }
+
 }

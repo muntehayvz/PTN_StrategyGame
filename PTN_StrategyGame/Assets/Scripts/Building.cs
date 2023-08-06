@@ -22,6 +22,10 @@ public class Building : MonoBehaviour
     [SerializeField]
     public UnityEngine.Vector2 dimensions;
 
+    [SerializeField]
+    public List<Transform> spawnPoints;
+
+
     #region Build Methods
     void Start()
     {
@@ -41,6 +45,7 @@ public class Building : MonoBehaviour
         if(buildingName == "Barrack")
         {
             UIManager.Instance.UpdateProductionImage(productImage.GetComponentInChildren<SpriteRenderer>());
+            SpawnSoldier();
         }
         else
         {
@@ -80,4 +85,51 @@ public class Building : MonoBehaviour
         
     }
     #endregion
+
+    public void SpawnSoldier()
+    {
+        if (buildingName == "Barrack")
+        {
+            Transform emptySpawnPoint = FindEmptySpawnPoint();
+            if (emptySpawnPoint != null)
+            {
+                UnityEngine.Vector3 spawnPosition = emptySpawnPoint.position;
+                GameObject soldierPrefab = Resources.Load<GameObject>("SoldierPrefab");
+                Instantiate(soldierPrefab, spawnPosition, UnityEngine.Quaternion.identity);
+            }
+        }
+    }
+
+    private Transform FindEmptySpawnPoint()
+    {
+        foreach (Transform spawnPoint in spawnPoints)
+        {
+            // Kontrol edilen spawnPoint'te asker var mı diye kontrol edin
+            bool isOccupied = IsSpawnPointOccupied(spawnPoint);
+
+            // Eğer spawnPoint boşsa, onu döndürün
+            if (!isOccupied)
+            {
+                return spawnPoint;
+            }
+        }
+
+        return null; // Eğer hiçbir spawnPoint boş değilse null döndürün
+    }
+
+    private bool IsSpawnPointOccupied(Transform spawnPoint)
+    {
+        Collider2D[] colliders = Physics2D.OverlapPointAll(spawnPoint.position);
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("Soldier")) // Eğer asker varsa true döndürün
+            {
+                return true;
+            }
+        }
+
+        return false; // Eğer asker yoksa false döndürün
+    }
+
 }

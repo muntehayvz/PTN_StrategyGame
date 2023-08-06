@@ -20,7 +20,7 @@ namespace Pathfinding {
         [SerializeField] private Animator anim;
 
         void OnEnable () {
-			ai = GetComponent<IAstarAI>();
+            ai = GetComponent<IAstarAI>();
             // Update the destination right before searching for a path as well.
             // This is enough in theory, but this script will also update the destination every
             // frame as the destination is used for debugging and may be used for other things by other
@@ -44,11 +44,11 @@ namespace Pathfinding {
         /// <summary>Updates the AI's destination every frame</summary>
         private void Update()
         {
-            if(!ai.isStopped && ai.pathPending)
+            if(!ai.reachedDestination && !ai.reachedEndOfPath && ai.remainingDistance.ToString() != "Infinity")
             {
                 anim.SetBool("isWalking", true);
             }
-            if(ai.isStopped || ai.reachedDestination)
+            else
             {
                 anim.SetBool("isWalking", false);
 
