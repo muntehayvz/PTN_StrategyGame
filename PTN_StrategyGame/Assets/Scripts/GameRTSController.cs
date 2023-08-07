@@ -11,7 +11,6 @@ public class GameRTSController : MonoBehaviour
     private Vector3 startPosition;
     private List<UnitRTS> selectedUnitRTSList;
 
-
     private void Awake()
     {
         selectedUnitRTSList= new List<UnitRTS>();
@@ -82,6 +81,11 @@ public class GameRTSController : MonoBehaviour
             foreach (UnitRTS unitRTS in selectedUnitRTSList)
             {
                 unitRTS.MoveTo(newTarget);
+                SoldierController soldierController = unitRTS.GetComponent<SoldierController>();
+                if (soldierController != null)
+                {
+                    soldierController.enableAttack();
+                }
             }
         }
     }

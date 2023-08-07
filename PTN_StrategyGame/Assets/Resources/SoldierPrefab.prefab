@@ -300,9 +300,10 @@ GameObject:
   - component: {fileID: 7128901832523780826}
   - component: {fileID: 7128901832523780827}
   - component: {fileID: 998410139}
+  - component: {fileID: 50268347241252747}
   - component: {fileID: 998410138}
   - component: {fileID: 1829202627242771874}
-  - component: {fileID: -307396543826050470}
+  - component: {fileID: -2672451507568175898}
   m_Layer: 1
   m_Name: SoldierPrefab
   m_TagString: Soldier
@@ -371,6 +372,7 @@ MonoBehaviour:
   version: 1
   target: {fileID: 0}
   anim: {fileID: 1599812758}
+  isMovingToTarget: 0
 --- !u!114 &7128901832523780827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,6 +412,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0fd40b0c2299c44582d636d399caff8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &50268347241252747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128901832523780806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b9cc90d9aa2b74a8b6f4bd9a968478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &998410138
@@ -454,11 +468,12 @@ MonoBehaviour:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 1, y: 1, z: 1}
   buildingName: Soldier
-  buildImage: {fileID: 7128901832523780806}
+  buildImage: {fileID: 7128901832191732848}
   productImage: {fileID: 0}
   dimensions: {x: 1, y: 1}
   spawnPoints: []
---- !u!50 &-307396543826050470
+  soldierTypes: []
+--- !u!50 &-2672451507568175898
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -466,7 +481,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7128901832523780806}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -475,7 +490,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
+  m_CollisionDetection: 0
+  m_Constraints: 4

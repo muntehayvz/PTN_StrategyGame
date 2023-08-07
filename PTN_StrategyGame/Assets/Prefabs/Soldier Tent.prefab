@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: -2315039420410888758}
   m_Layer: 1
   m_Name: Soldier Tent
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,10 +133,12 @@ MonoBehaviour:
   area:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 3, y: 3, z: 1}
-  buildingName: SoldierTent
+  buildingName: Soldier Tent
   buildImage: {fileID: 280073070980502343}
   productImage: {fileID: 0}
   dimensions: {x: 4, y: 4}
+  spawnPoints: []
+  soldierTypes: []
 --- !u!61 &-2315039420410888758
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ namespace Pathfinding {
 		public Transform target;
 		IAstarAI ai;
         [SerializeField] private Animator anim;
+        public bool isMovingToTarget = false;
 
         void OnEnable () {
             ai = GetComponent<IAstarAI>();
@@ -28,7 +29,8 @@ namespace Pathfinding {
             if (ai != null) ai.onSearchPath += Update;
 		}
 
-		void OnDisable () {
+
+        void OnDisable () {
 			if (ai != null) ai.onSearchPath -= Update;
 		}
 		
@@ -37,6 +39,7 @@ namespace Pathfinding {
             if (ai != null && movePosition != null)
             {
                 this.target = movePosition;
+                isMovingToTarget = true;
                 ai.destination = target.position;
             }
         }
@@ -53,7 +56,7 @@ namespace Pathfinding {
                 anim.SetBool("isWalking", false);
 
             }
-
+            
             /*if (Input.GetMouseButtonDown(1)) // Sol tıklama kontrolü
             {
                 Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

@@ -1,57 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using TMPro;
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject parentObject;
-
-    public Image building;
-
-    [Range(1,100)]
-    public int gridX, gridY;
-
-    [SerializeField]
-    private float buildingCurrentSizeX, buildingCurrentSizeY;
-
-    [SerializeField]
-    private float defaultPositionX, defaultPositionY;
-
-    private void Start()
+    void Start()
     {
-        buildingCurrentSizeX = building.GetComponent<RectTransform>().sizeDelta.x;
-        buildingCurrentSizeY = building.GetComponent<RectTransform>().sizeDelta.y;
+/*        BuildingFactory buildingFactory = GetComponent<BuildingFactory>();
 
-        defaultPositionX = building.GetComponent<RectTransform>().anchoredPosition.x;
-        defaultPositionY = building.GetComponent<RectTransform>().anchoredPosition.y;
+        IBuilding barracks = buildingFactory.CreateBuilding(BuildingType.Barracks);
+        IBuilding powerPlant = buildingFactory.CreateBuilding(BuildingType.PowerPlant);
 
-        GridSystem();
-    }
-
-    void GridSystem()
-    {
-        for (int i = 0; i < gridX; i++)
-        {
-            for (int j = (gridY - 1); j >= 0; j--)
-            {
-                Image image = Instantiate(building, parentObject.transform);
-                image.GetComponent<RectTransform>().anchoredPosition = new Vector3(defaultPositionX + (buildingCurrentSizeX * i), defaultPositionY - (buildingCurrentSizeY * j), 0);
-
-                var buildingName = new StringBuilder();
-                buildingName.Append("Building");
-                buildingName.Append(i);
-                buildingName.Append("_");
-                buildingName.Append(j);
-
-                image.name = buildingName.ToString();
-            }
-        }   
+        barracks.DisplayInfo();
+        powerPlant.DisplayInfo();*/
     }
 }
+
+
+
+
+
+
+
+
+
+
 
 
 /*public static GameManager instance;

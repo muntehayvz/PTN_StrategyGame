@@ -33,13 +33,14 @@ public class UIManager : MonoBehaviour
 
     public void UpdateBuildingNameAndImage(string buildingName, SpriteRenderer buildingImage)
     {
+
         if (buildingName != null && buildingImage != null)
         {
             buildingNameText.text = buildingName;
             buildingImageRenderer.sprite = buildingImage.sprite;
         }
 
-        if(buildingName == "Barrack")
+        if (buildingName == "Barrack")
         {
             productionMenu.SetActive(true);
         }
@@ -59,6 +60,11 @@ public class UIManager : MonoBehaviour
     public void ClearProductionImage()
     {
         productionRenderer.sprite = null;
+    }
+    public void UpdateSoldierInfo(string soldierName)
+    {
+        buildingNameText.text = soldierName;
+        buildingImageRenderer.sprite = null;
     }
 
 }

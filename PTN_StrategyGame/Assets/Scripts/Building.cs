@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Pathfinding;
+using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
@@ -25,17 +26,34 @@ public class Building : MonoBehaviour
     [SerializeField]
     public List<Transform> spawnPoints;
 
+    [SerializeField]
+    private List<Soldier> soldierTypes;
+    IAstarAI ai;
+
+
+    private void Awake()
+    {
+       // Initializing soldier types with different attack damages
+        soldierTypes = new List<Soldier>
+        {
+            new Soldier(10, 10), // Soldier 1
+            new Soldier(10, 5),  // Soldier 2
+            new Soldier(10, 2)   // Soldier 3
+        };
+    }
 
     #region Build Methods
     void Start()
     {
+        ai = GetComponent<IAstarAI>();
+
         Collider2D collider = GetComponent<Collider2D>();
         if (collider != null)
         {
             collider.enabled = true;
         }
     }
-
+    
     private void OnMouseDown()
     {
         Debug.Log("Bina Adı: " + buildingName);
@@ -45,12 +63,10 @@ public class Building : MonoBehaviour
         if(buildingName == "Barrack")
         {
             UIManager.Instance.UpdateProductionImage(productImage.GetComponentInChildren<SpriteRenderer>());
-            SpawnSoldier();
+            int randomSpawn = Random.Range(0, 3); // 1, 2 veya 3 rastgele dönecek
+            SpawnSoldier(randomSpawn);
         }
-        else
-        {
-            UIManager.Instance.ClearProductionImage();
-        }
+
     }
 
     public bool CanBePlaced()
@@ -73,31 +89,49 @@ public class Building : MonoBehaviour
         areaTemp.position = positionInt;
 
         Placed = true;
-        if(buildingName != "Soldier")
+        GridBuildingSystem.instance.TakeArea(areaTemp);
+        AstarPath.active.Scan();
+
+
+        BuildingFactory buildingFactory = GetComponent<BuildingFactory>();
+
+        if (buildingName == "Barrack")
         {
-            GridBuildingSystem.instance.TakeArea(areaTemp);
-            AstarPath.active.Scan();
+            IBuilding barracks = buildingFactory.CreateBuilding(BuildingType.Barracks);
+            barracks.DisplayInfo();
         }
-        else
+        if (buildingName == "Power Plant")
         {
-            GridBuildingSystem.instance.ClearArea();
+            IBuilding powerPlant = buildingFactory.CreateBuilding(BuildingType.PowerPlant);
+            powerPlant.DisplayInfo();
         }
-        
+
     }
     #endregion
 
-    public void SpawnSoldier()
+    public void SpawnSoldier(int soldierTypeIndex)
     {
-        if (buildingName == "Barrack")
+        if (Placed)
         {
-            Transform emptySpawnPoint = FindEmptySpawnPoint();
-            if (emptySpawnPoint != null)
+            if (buildingName == "Barrack")
             {
-                UnityEngine.Vector3 spawnPosition = emptySpawnPoint.position;
-                GameObject soldierPrefab = Resources.Load<GameObject>("SoldierPrefab");
-                Instantiate(soldierPrefab, spawnPosition, UnityEngine.Quaternion.identity);
+                Transform emptySpawnPoint = FindEmptySpawnPoint();
+                if (emptySpawnPoint != null)
+                {
+                    UnityEngine.Vector3 spawnPosition = emptySpawnPoint.position;
+                    GameObject soldierPrefab = Resources.Load<GameObject>("SoldierPrefab");
+
+                    if (soldierPrefab != null)
+                    {
+                        GameObject newSoldier = Instantiate(soldierPrefab, spawnPosition, UnityEngine.Quaternion.identity);
+                        Soldier soldierType = soldierTypes[soldierTypeIndex];
+                        newSoldier.GetComponent<SoldierController>().Initialize(soldierType);
+
+                    }
+                }
             }
         }
+        
     }
 
     private Transform FindEmptySpawnPoint()

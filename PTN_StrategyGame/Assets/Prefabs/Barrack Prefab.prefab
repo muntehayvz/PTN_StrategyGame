@@ -589,9 +589,11 @@ GameObject:
   - component: {fileID: 4948025752943616592}
   - component: {fileID: 6002272518949157038}
   - component: {fileID: 6675910455318538682}
+  - component: {fileID: 2545468796282427874}
+  - component: {fileID: 6562702089223714871}
   m_Layer: 1
   m_Name: Barrack Prefab
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -653,6 +655,7 @@ MonoBehaviour:
   - {fileID: 1950284746003522877}
   - {fileID: 268021612320110523}
   - {fileID: 848623441928212010}
+  soldierTypes: []
 --- !u!61 &6675910455318538682
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -666,7 +669,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.41578972, y: 0.40736207}
+  m_Offset: {x: 0.4343472, y: 0.40426916}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -677,8 +680,32 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1172447, y: 1.0238948}
+  m_Size: {x: 1.2904481, y: 1.1414257}
   m_EdgeRadius: 0
+--- !u!114 &2545468796282427874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6276474226432476856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eed04e6cce4f60640973abeabdf67f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6562702089223714871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6276474226432476856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f886b2aafb393b6418c440e6f300500b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6418875425084149742
 GameObject:
   m_ObjectHideFlags: 0
