@@ -9,6 +9,8 @@ public class SoldierController : MonoBehaviour
     private bool canAttack = false;
     private int HealthPoints;
     private int AttackDamage;
+    private Barracks targetBarracks; // Add this line
+    private PowerPlant targetPowerPlant; // Add this line
 
 
     private static SoldierController instance;
@@ -22,6 +24,14 @@ public class SoldierController : MonoBehaviour
             }
             return instance;
         }
+    }
+    public void SetTargetBarracks(Barracks barracks)
+    {
+        targetBarracks = barracks;
+    }
+    public void SetTargetPowerPlant(PowerPlant powerPlant)
+    {
+        targetPowerPlant = powerPlant;
     }
     public void Initialize(Soldier soldierType)
     {
@@ -40,8 +50,12 @@ public class SoldierController : MonoBehaviour
     {
         if (canAttack && collision.gameObject.CompareTag("Building"))
         {
-            Debug.Log("Can attack: " + canAttack);
-            Debug.Log("attack: " + AttackDamage);
+            Barracks targetBarracks = collision.gameObject.GetComponent<Barracks>();
+            PowerPlant targetPowerPlant = collision.gameObject.GetComponent<PowerPlant>();
+
+            Debug.Log("Attacking again ");
+            SetTargetBarracks(targetBarracks);
+            SetTargetPowerPlant(targetPowerPlant);
             Attack();
         }
     }
@@ -50,7 +64,6 @@ public class SoldierController : MonoBehaviour
     {
         if (canAttack && collision.gameObject.CompareTag("Building") && Input.GetMouseButtonDown(1))
         {
-            Debug.Log("Attacking again ");
             Attack();
         }
 
@@ -61,6 +74,16 @@ public class SoldierController : MonoBehaviour
         // Implement attack behavior
         // For example:
         Debug.Log("Attacking with damage: " + soldierData.AttackDamage);
+        if (targetBarracks != null)
+        {
+            targetBarracks.GetDamage(AttackDamage);
+            Debug.Log("barrack health: "+targetBarracks.GetHealth());
+        }
+        if (targetPowerPlant != null)
+        {
+            targetPowerPlant.GetDamage(AttackDamage);
+            Debug.Log("powerplant health: " + targetPowerPlant.GetHealth());
+        }
     }
 
 

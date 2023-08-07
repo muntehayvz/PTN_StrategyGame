@@ -1,7 +1,8 @@
-using UnityEngine;
-
 public interface IBuilding
 {
-    int HealthPoints { get; }
+    int MaxHealthPoints { get; }
     void DisplayInfo();
+    void GetDamage(int damage);
+    float GetHealthPercent();
+    int GetHealth();
 }

@@ -126,12 +126,10 @@ public class Building : MonoBehaviour
                         GameObject newSoldier = Instantiate(soldierPrefab, spawnPosition, UnityEngine.Quaternion.identity);
                         Soldier soldierType = soldierTypes[soldierTypeIndex];
                         newSoldier.GetComponent<SoldierController>().Initialize(soldierType);
-
                     }
                 }
             }
         }
-        
     }
 
     private Transform FindEmptySpawnPoint()
