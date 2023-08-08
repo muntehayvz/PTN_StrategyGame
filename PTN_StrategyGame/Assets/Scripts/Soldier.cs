@@ -11,6 +11,6 @@ public class Soldier
     public Soldier(int healthPoints, int attackDamage)
     {
         HealthPoints = healthPoints;
-        AttackDamage = attackDamage;
+        AttackDamage = attackDamage;    
     }
 }

@@ -198,6 +198,13 @@ public class GridBuildingSystem : MonoBehaviour
         SetTilesBlock(area, TileType.Empty, TempTilemap);
         SetTilesBlock(area, TileType.Green, MainTilemap);
     }
+    public void ClearTilemapArea(BoundsInt area)
+    {
+        TileBase[] toClear = new TileBase[area.size.x * area.size.y * area.size.z];
+        FillTiles(toClear, TileType.White);
+        MainTilemap.SetTilesBlock(area, toClear);
+    }
+
     #endregion
 
     public enum TileType

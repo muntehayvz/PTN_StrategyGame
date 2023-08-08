@@ -669,6 +669,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b9cc90d9aa2b74a8b6f4bd9a968478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: {fileID: 7900867281845328043}
+  anim: {fileID: 1599812758}
 --- !u!61 &998410138
 BoxCollider2D:
   m_ObjectHideFlags: 0

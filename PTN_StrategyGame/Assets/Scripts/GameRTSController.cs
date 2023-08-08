@@ -2,6 +2,7 @@
 using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 using static UnityEngine.GraphicsBuffer;
 
 public class GameRTSController : MonoBehaviour
@@ -10,6 +11,7 @@ public class GameRTSController : MonoBehaviour
 
     private Vector3 startPosition;
     private List<UnitRTS> selectedUnitRTSList;
+    private float gridInterval = 0.3f;
 
     private void Awake()
     {
@@ -71,22 +73,68 @@ public class GameRTSController : MonoBehaviour
             Debug.Log(selectedUnitRTSList.Count);
         }
 
+        //Her hangi bir noktaya sag click yagildiginda bu noktaya asker veya askerlerin hareketi saglanir
         if (Input.GetMouseButtonDown(1)) // Sağ tıklamayı kontrol edelim
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
-            Transform newTarget = hit.transform; // Tıklanan noktanın Transform'u
-
-            foreach (UnitRTS unitRTS in selectedUnitRTSList)
+            if (hit.collider != null)
             {
-                unitRTS.MoveTo(newTarget);
-                SoldierController soldierController = unitRTS.GetComponent<SoldierController>();
-                if (soldierController != null)
+                Transform newTarget = hit.collider.transform; // Tıklanan noktanın Transform'u
+
+                if (selectedUnitRTSList.Count > 1) // Birden fazla asker seçiliyse
                 {
-                    soldierController.enableAttack();
+                    List<Transform> targetTransformList = GetPositionListAround(newTarget, gridInterval, selectedUnitRTSList.Count);
+
+                    int targetposindex = 0;
+                    foreach (UnitRTS unitRTS in selectedUnitRTSList)
+                    {
+                        unitRTS.MoveTo(targetTransformList[targetposindex]);
+                        targetposindex = (targetposindex + 1) % targetTransformList.Count;
+                        SoldierController soldierController = unitRTS.GetComponent<SoldierController>();
+                        if (soldierController != null)
+                        {
+                            soldierController.enableAttack();
+                        }
+                    }
+                }
+                else // Sadece bir asker seçiliyse
+                {
+                    foreach (UnitRTS unitRTS in selectedUnitRTSList)
+                    {
+                        unitRTS.MoveTo(newTarget);
+                        SoldierController soldierController = unitRTS.GetComponent<SoldierController>();
+                        if (soldierController != null)
+                        {
+                            soldierController.enableAttack();
+                        }
+                    }
                 }
             }
         }
     }
+
+    private List<Transform> GetPositionListAround(Transform startPosition, float distance, int positionCount)
+    {
+        List<Transform> positionList = new List<Transform>();
+        for (int i = 0; i < positionCount; i++)
+        {
+            float angle = i * (360f / positionCount);
+            Vector3 dir = ApplyRotationToVector(new Vector3(1, 0), angle);
+            Vector3 position = startPosition.position + dir * distance;
+
+            GameObject emptyObject = new GameObject(); // Boş bir GameObject oluştur
+            emptyObject.transform.position = position; // Pozisyonunu ayarla
+            positionList.Add(emptyObject.transform); // Listeye ekle
+        }
+        return positionList;
+    }
+
+
+    private Vector3 ApplyRotationToVector(Vector3 vec, float angle)
+    {
+        return Quaternion.Euler(0, 0, angle) * vec;
+    }
+
 }

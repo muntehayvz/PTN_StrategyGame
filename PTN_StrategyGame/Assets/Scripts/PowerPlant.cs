@@ -32,6 +32,10 @@ public class PowerPlant : MonoBehaviour, IBuilding
     {
         healthPoints -= damage;
         healthBar.UpdateHealthBar(healthPoints, MaxHealthPoints);
-        if (healthPoints < 0) healthPoints = 0;
+        if (healthPoints <= 0)
+        {
+            healthPoints = 0;
+            Destroy(gameObject);
+        }
     }
 }

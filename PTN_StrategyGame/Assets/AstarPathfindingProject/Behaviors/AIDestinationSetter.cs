@@ -33,17 +33,36 @@ namespace Pathfinding {
         void OnDisable () {
 			if (ai != null) ai.onSearchPath -= Update;
 		}
-		
-		public void SetMovePosition(Transform movePosition)
-		{
-            if (ai != null && movePosition != null)
+
+        private float stopDistance = 0.3f; // The distance at which the AI should stop
+
+        public void SetMovePosition(Transform movePosition)
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+            if (hit.collider != null && hit.collider.CompareTag("Soldier")) // Sadece Soldier etiketli nesneleri kontrol et
             {
                 this.target = movePosition;
                 isMovingToTarget = true;
-                ai.destination = target.position;
+
+                Vector3 dirToTarget = (target.position - transform.position).normalized;
+                Vector3 stopPosition = target.position - dirToTarget * stopDistance;
+
+                ai.destination = stopPosition;
+            }
+            else
+            {
+                if (ai != null && movePosition != null)
+                {
+                    this.target = movePosition;
+                    isMovingToTarget = true;
+
+                    ai.destination = target.position;
+                }
             }
         }
-
+    
         /// <summary>Updates the AI's destination every frame</summary>
         private void Update()
         {
@@ -56,24 +75,6 @@ namespace Pathfinding {
                 anim.SetBool("isWalking", false);
 
             }
-            
-            /*if (Input.GetMouseButtonDown(1)) // Sol tıklama kontrolü
-            {
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-
-                if (hit.collider != null) 
-                {
-                    Transform newTarget = hit.transform; // Tıklanan noktanın Transform'u
-                    Debug.Log(newTarget);
-
-                    if (ai != null)
-                    {
-                        target = newTarget;
-                    }
-					ai.destination = target.position;
-                }
-            }*/
         }
     }
 }

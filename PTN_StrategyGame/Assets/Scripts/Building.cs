@@ -28,12 +28,12 @@ public class Building : MonoBehaviour
 
     [SerializeField]
     private List<Soldier> soldierTypes;
-    IAstarAI ai;
 
 
+    #region Build Methods
     private void Awake()
     {
-       // Initializing soldier types with different attack damages
+        // Initializing soldier types with different attack damages
         soldierTypes = new List<Soldier>
         {
             new Soldier(10, 10), // Soldier 1
@@ -42,18 +42,23 @@ public class Building : MonoBehaviour
         };
     }
 
-    #region Build Methods
+
     void Start()
     {
-        ai = GetComponent<IAstarAI>();
-
         Collider2D collider = GetComponent<Collider2D>();
         if (collider != null)
         {
             collider.enabled = true;
         }
     }
-    
+/*
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+        }
+    }
+*/
     private void OnMouseDown()
     {
         Debug.Log("Bina Adı: " + buildingName);
@@ -92,8 +97,7 @@ public class Building : MonoBehaviour
         GridBuildingSystem.instance.TakeArea(areaTemp);
         AstarPath.active.Scan();
 
-
-        BuildingFactory buildingFactory = GetComponent<BuildingFactory>();
+/*        BuildingFactory buildingFactory = GetComponent<BuildingFactory>();
 
         if (buildingName == "Barrack")
         {
@@ -104,7 +108,7 @@ public class Building : MonoBehaviour
         {
             IBuilding powerPlant = buildingFactory.CreateBuilding(BuildingType.PowerPlant);
             powerPlant.DisplayInfo();
-        }
+        }*/
 
     }
     #endregion
@@ -163,5 +167,11 @@ public class Building : MonoBehaviour
 
         return false; // Eğer asker yoksa false döndürün
     }
-
+    private void OnDestroy()
+    {
+        if (Placed)
+        {
+            GridBuildingSystem.instance.ClearTilemapArea(area);
+        }
+    }
 }
