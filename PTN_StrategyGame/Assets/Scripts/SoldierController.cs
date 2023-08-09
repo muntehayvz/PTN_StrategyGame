@@ -33,36 +33,54 @@ public class SoldierController : MonoBehaviour
     private void Awake()
     {
         healthBar = GetComponentInChildren<HealthBar>();
+        canAttack= false;
     }
 
     private void Update()
     {
-        if (canAttack && Input.GetMouseButtonDown(1)) // Sadece sağ tıklama ile saldırı
+        if (Input.GetMouseButtonDown(1)) // Sadece sağ tıklama ile saldırı
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
             if (hit.collider != null)
             {
-                SoldierController targetSoldier = hit.collider.GetComponent<SoldierController>();
-                if (targetSoldier != null && targetSoldier != this)
+                if (hit.collider.CompareTag("Building") && GameRTSController.Instance.selectedUnitRTSList.Contains(this.GetComponent<UnitRTS>()))
                 {
-                    // Calculate distance between soldiers
-                    float distance = Vector2.Distance(transform.position, targetSoldier.transform.position);
+                    float distance = Vector2.Distance(this.transform.position, hit.collider.transform.position);
 
-                    // Check if the distance is within attack range
-                    if (distance <= 0.4f)
+                    if (distance <= 0.6f)
                     {
-                        anim.SetBool("isShooting", true);
-                        StartCoroutine(ResetShootingAnimation());
+                        Barracks targetBarracks = hit.collider.GetComponent<Barracks>();
+                        PowerPlant targetPowerPlant = hit.collider.GetComponent<PowerPlant>();
 
-                        // Inflict damage on the target soldier
-                        targetSoldier.TakeDamage(AttackDamage);
-
+                        SetTargetBarracks(targetBarracks);
+                        SetTargetPowerPlant(targetPowerPlant);
+                        Attack();
                     }
-                    else
+                }
+                if(canAttack)
+                {
+                    SoldierController targetSoldier = hit.collider.GetComponent<SoldierController>();
+                    if (targetSoldier != null && targetSoldier != this)
                     {
-                        Debug.Log("Target is too far for attack.");
+                        // Calculate distance between soldiers
+                        float distance = Vector2.Distance(this.transform.position, targetSoldier.transform.position);
+
+                        // Check if the distance is within attack range
+                        if (distance <= 0.4f)
+                        {
+                            anim.SetBool("isShooting", true);
+                            StartCoroutine(ResetShootingAnimation());
+
+                            // Inflict damage on the target soldier
+                            targetSoldier.TakeDamage(AttackDamage);
+
+                        }
+                        else
+                        {
+                            Debug.Log("Target is too far for attack.");
+                        }
                     }
                 }
             }
@@ -85,32 +103,16 @@ public class SoldierController : MonoBehaviour
         AttackDamage = soldierData.AttackDamage;
     }
 
-    public void enableAttack()
+    public void EnableAttack()
     {
         canAttack = true;
-
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (canAttack && collision.gameObject.CompareTag("Building"))
-        {
-            Barracks targetBarracks = collision.gameObject.GetComponent<Barracks>();
-            PowerPlant targetPowerPlant = collision.gameObject.GetComponent<PowerPlant>();
-
-            Debug.Log("Attacking again ");
-            SetTargetBarracks(targetBarracks);
-            SetTargetPowerPlant(targetPowerPlant);
-            Attack();
-        }
     }
 
-/*    private void OnCollisionStay2D(Collision2D collision)
+    public void DisableAttack()
     {
-        if (canAttack && collision.gameObject.CompareTag("Building") && Input.GetMouseButtonDown(1))
-        {
-            Attack();
-        }
-    }*/
+        canAttack = false;
+    }
+
 
     private void Attack()
     {

@@ -713,7 +713,7 @@ MonoBehaviour:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 1, y: 1, z: 1}
   buildingName: Soldier
-  buildImage: {fileID: 7128901832191732848}
+  buildImage: {fileID: 730857208123867739, guid: d617b139328c71548930a78e480c4b44, type: 3}
   productImage: {fileID: 0}
   dimensions: {x: 1, y: 1}
   spawnPoints: []

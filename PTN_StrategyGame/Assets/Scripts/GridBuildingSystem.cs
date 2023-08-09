@@ -22,6 +22,7 @@ public class GridBuildingSystem : MonoBehaviour
     private bool isPlacing = false; // Tıklanarak yerleştirme modunu temsil eder
     private GameObject buildingPrefab; // Yerleştirilecek objenin prefabı
     private UnityEngine.Vector3 targetPosition;
+    [SerializeField] GameObject cannotPlaceText;
 
     #region Unity Methods
     private void Awake()
@@ -31,6 +32,7 @@ public class GridBuildingSystem : MonoBehaviour
 
     void Start()
     {
+        cannotPlaceText.SetActive(false);   
         string tilePath = @"Tiles\";
         tileBases.Add(TileType.Empty, null); 
         tileBases.Add(TileType.White, Resources.Load<TileBase>(tilePath + "stone")); 
@@ -187,12 +189,19 @@ public class GridBuildingSystem : MonoBehaviour
             if(b!= tileBases[TileType.White])
             {
                 Debug.Log("Cannot place here!");
+                cannotPlaceText.SetActive(true);
+                StartCoroutine(DisableText());
                 return false;
             }
         }
         return true;
     }
 
+    private IEnumerator DisableText()
+    {
+        yield return new WaitForSeconds(1f);
+        cannotPlaceText.SetActive(false);
+    }
     public void TakeArea(BoundsInt area)
     {
         SetTilesBlock(area, TileType.Empty, TempTilemap);

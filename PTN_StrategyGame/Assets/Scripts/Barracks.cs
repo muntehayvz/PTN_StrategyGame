@@ -7,11 +7,12 @@ public class Barracks : MonoBehaviour, IBuilding
     public int MaxHealthPoints => 100;
     public int damageAmount => 100;
 
-    [SerializeField] HealthBar healthBar;
+    [SerializeField] private HealthBar healthBar;
 
     private void Awake()
     {
         healthBar = GetComponentInChildren<HealthBar>();
+        Debug.Log(healthPoints);
     }
 
     public void DisplayInfo()

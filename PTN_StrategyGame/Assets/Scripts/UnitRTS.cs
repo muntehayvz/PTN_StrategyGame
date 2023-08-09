@@ -23,17 +23,26 @@ public class UnitRTS : MonoBehaviour
 
     public void FlipCharacter(bool visible)
     {
-        characterFlip.enabled = visible;
+        if (selectedGameObject != null)
+        {
+            characterFlip.enabled = visible;
+        }
     }
 
-    public void SetSelectedVisible(bool visible)
+        public void SetSelectedVisible(bool visible)
     {
-        selectedGameObject.SetActive(visible);
+        if (selectedGameObject != null)
+        {
+            selectedGameObject.SetActive(visible);
+        }
     }
 
     public void MoveTo(Transform targetPosition) // Hedef konumu Vector3 olarak alalım
     {
-        movePosition.SetMovePosition(targetPosition);
+        if (movePosition != null)
+        {
+            movePosition.SetMovePosition(targetPosition);
+        }
     }
 
     public bool IsArrived()

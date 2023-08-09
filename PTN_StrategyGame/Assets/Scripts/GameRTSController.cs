@@ -10,12 +10,24 @@ public class GameRTSController : MonoBehaviour
     [SerializeField] private Transform selectionAreaTranform;
 
     private Vector3 startPosition;
-    private List<UnitRTS> selectedUnitRTSList;
-    private float gridInterval = 0.3f;
-
+    public List<UnitRTS> selectedUnitRTSList;
+    private float gridInterval = 0.3f; 
+    
+    private static GameRTSController instance;
+    public static GameRTSController Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<GameRTSController>();
+            }
+            return instance;
+        }
+    }
     private void Awake()
     {
-        selectedUnitRTSList= new List<UnitRTS>();
+        selectedUnitRTSList = new List<UnitRTS>();
         selectionAreaTranform.gameObject.SetActive(false);
     }
 
@@ -31,7 +43,7 @@ public class GameRTSController : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             //Left Mouse Button Held
-            Vector3 currentMousePosition= UtilsClass.GetMouseWorldPosition();
+            Vector3 currentMousePosition = UtilsClass.GetMouseWorldPosition();
             Vector3 lowerLeft = new Vector3(
                 Mathf.Min(startPosition.x, currentMousePosition.x),
                 Mathf.Min(startPosition.y, currentMousePosition.y)
@@ -52,7 +64,7 @@ public class GameRTSController : MonoBehaviour
             Collider2D[] collider2DArray = Physics2D.OverlapAreaAll(startPosition, UtilsClass.GetMouseWorldPosition());
 
             //Deselect all Units
-            foreach(UnitRTS unitRTS in selectedUnitRTSList)
+            foreach (UnitRTS unitRTS in selectedUnitRTSList)
             {
                 unitRTS.SetSelectedVisible(false);
                 unitRTS.FlipCharacter(false);
@@ -61,7 +73,8 @@ public class GameRTSController : MonoBehaviour
             selectedUnitRTSList.Clear();
 
             //Select Units within Selection Area
-            foreach (Collider2D collider2D in collider2DArray) {
+            foreach (Collider2D collider2D in collider2DArray)
+            {
                 UnitRTS unitRTS = collider2D.GetComponent<UnitRTS>();
                 if (unitRTS != null)
                 {
@@ -90,30 +103,52 @@ public class GameRTSController : MonoBehaviour
                     int targetposindex = 0;
                     foreach (UnitRTS unitRTS in selectedUnitRTSList)
                     {
-                        unitRTS.MoveTo(targetTransformList[targetposindex]);
-                        targetposindex = (targetposindex + 1) % targetTransformList.Count;
-                        SoldierController soldierController = unitRTS.GetComponent<SoldierController>();
-                        if (soldierController != null)
+                        if (unitRTS != null)
                         {
-                            soldierController.enableAttack();
+                            unitRTS.MoveTo(targetTransformList[targetposindex]);
+                            targetposindex = (targetposindex + 1) % targetTransformList.Count;
+                            SoldierController soldierController = unitRTS.GetComponent<SoldierController>();
+                            if (soldierController != null)
+                            {
+                                if (hit.collider.CompareTag("Soldier"))
+                                {
+                                    soldierController.EnableAttack();
+                                }
+                                else
+                                {
+                                    soldierController.DisableAttack();
+                                }
+                            }
                         }
                     }
                 }
                 else // Sadece bir asker seçiliyse
                 {
-                    foreach (UnitRTS unitRTS in selectedUnitRTSList)
+                    if (selectedUnitRTSList.Count == 1)
                     {
-                        unitRTS.MoveTo(newTarget);
-                        SoldierController soldierController = unitRTS.GetComponent<SoldierController>();
-                        if (soldierController != null)
+                        UnitRTS unitRTS = selectedUnitRTSList[0];
+                        if (unitRTS != null)
                         {
-                            soldierController.enableAttack();
+                            unitRTS.MoveTo(newTarget);
+                            SoldierController soldierController = unitRTS.GetComponent<SoldierController>();
+                            if (soldierController != null)
+                            {
+                                if (hit.collider.CompareTag("Soldier"))
+                                {
+                                    soldierController.EnableAttack();
+                                }
+                                else
+                                {
+                                    soldierController.DisableAttack();
+                                }
+                            }
                         }
                     }
                 }
             }
         }
     }
+
 
     private List<Transform> GetPositionListAround(Transform startPosition, float distance, int positionCount)
     {
@@ -122,11 +157,12 @@ public class GameRTSController : MonoBehaviour
         {
             float angle = i * (360f / positionCount);
             Vector3 dir = ApplyRotationToVector(new Vector3(1, 0), angle);
-            Vector3 position = startPosition.position + dir * distance;
+            Vector3 position = startPosition.position + dir * (distance * 0.6f);
 
             GameObject emptyObject = new GameObject(); // Boş bir GameObject oluştur
             emptyObject.transform.position = position; // Pozisyonunu ayarla
             positionList.Add(emptyObject.transform); // Listeye ekle
+            Destroy(emptyObject);
         }
         return positionList;
     }

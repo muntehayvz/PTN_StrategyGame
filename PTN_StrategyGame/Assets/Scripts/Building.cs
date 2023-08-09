@@ -29,6 +29,8 @@ public class Building : MonoBehaviour
     [SerializeField]
     private List<Soldier> soldierTypes;
 
+    [SerializeField] private AudioSource audioSource;
+
 
     #region Build Methods
     private void Awake()
@@ -51,14 +53,6 @@ public class Building : MonoBehaviour
             collider.enabled = true;
         }
     }
-/*
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-        }
-    }
-*/
     private void OnMouseDown()
     {
         Debug.Log("Bina Adı: " + buildingName);
@@ -87,6 +81,9 @@ public class Building : MonoBehaviour
         }
         return false;
     }
+    [SerializeField] ParticleSystem placementParticleEffect;
+
+
     public void Place()
     {
         Vector3Int positionInt = GridBuildingSystem.instance.gridLayout.LocalToCell(transform.position);
@@ -96,21 +93,34 @@ public class Building : MonoBehaviour
         Placed = true;
         GridBuildingSystem.instance.TakeArea(areaTemp);
         AstarPath.active.Scan();
-
-/*        BuildingFactory buildingFactory = GetComponent<BuildingFactory>();
-
-        if (buildingName == "Barrack")
+        if(audioSource!= null)
         {
-            IBuilding barracks = buildingFactory.CreateBuilding(BuildingType.Barracks);
-            barracks.DisplayInfo();
+            audioSource.Play();
         }
-        if (buildingName == "Power Plant")
-        {
-            IBuilding powerPlant = buildingFactory.CreateBuilding(BuildingType.PowerPlant);
-            powerPlant.DisplayInfo();
-        }*/
-
+        TriggerPlacementParticleEffect();
     }
+
+    private void TriggerPlacementParticleEffect()
+    {
+        if (placementParticleEffect != null)
+        {
+            ParticleSystem particleSystem = placementParticleEffect.GetComponent<ParticleSystem>();
+            if (particleSystem != null)
+            {
+                particleSystem.Play();
+                StartCoroutine(DestroyParticleEffectAfterPlay(particleSystem));
+            }
+        }
+    }
+    private IEnumerator DestroyParticleEffectAfterPlay(ParticleSystem particleSystem)
+    {
+        yield return new WaitForSeconds(2f);
+
+        particleSystem.Stop();
+        Destroy(particleSystem.gameObject);
+    }
+
+
     #endregion
 
     public void SpawnSoldier(int soldierTypeIndex)
@@ -169,7 +179,7 @@ public class Building : MonoBehaviour
     }
     private void OnDestroy()
     {
-        if (Placed)
+        if (Placed && GridBuildingSystem.instance != null)
         {
             GridBuildingSystem.instance.ClearTilemapArea(area);
         }
