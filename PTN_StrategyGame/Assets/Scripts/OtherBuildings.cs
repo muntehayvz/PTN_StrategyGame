@@ -1,17 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class PowerPlant : IBuilding
+public class OtherBuildings : IBuilding
 {
     protected override void Awake()
     {
-        buildingName = "PowerPlant";
-        healthPoints = MaxHealthPoints = 50;
+        //healthPoints = MaxHealthPoints = 20;
         base.Awake();
     }
 
     public override void DisplayInfo()
     {
-        Debug.Log("PowerPlant: HP - " + healthPoints);
+        Debug.Log(buildingName + "HP - " + healthPoints);
     }
 
     private void OnMouseDown()

@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 3121363031729335835}
   - component: {fileID: 5119579867068540354}
   - component: {fileID: 6329435838560750835}
+  - component: {fileID: 8297945586550842595}
   m_Layer: 1
   m_Name: Guard Tower
   m_TagString: Building
@@ -135,12 +136,6 @@ MonoBehaviour:
   area:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 2, y: 3, z: 1}
-  buildingName: Guard Tower
-  buildImage: {fileID: 1959120621896944463}
-  productImage: {fileID: 0}
-  dimensions: {x: 2, y: 3}
-  spawnPoints: []
-  soldierTypes: []
   audioSource: {fileID: 6329435838560750835}
   placementParticleEffect: {fileID: 6497324941293145942}
 --- !u!61 &5119579867068540354
@@ -265,6 +260,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8297945586550842595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4927536979986614077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7758627c4edcc584cb8599c084331874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingName: GuardTower
+  buildImage: {fileID: 1959120621896944463}
+  dimensions: {x: 2, y: 3}
+  healthBar: {fileID: 0}
 --- !u!1001 &487457492191956823
 PrefabInstance:
   m_ObjectHideFlags: 0

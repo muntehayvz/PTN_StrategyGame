@@ -710,26 +710,6 @@ MonoBehaviour:
   area:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 4, y: 4, z: 1}
-  buildingName: Barrack
-  buildImage: {fileID: 6632033533662013603}
-  productImage: {fileID: 7128901832523780806, guid: ee0fc0b702bc46e429a57c43d5e2fe74, type: 3}
-  dimensions: {x: 4, y: 4}
-  spawnPoints:
-  - {fileID: 7502140373286621284}
-  - {fileID: 1968036517374407540}
-  - {fileID: 3955409444702812373}
-  - {fileID: 8954619266308544330}
-  - {fileID: 5439569434928775030}
-  - {fileID: 1477932905526630924}
-  - {fileID: 6496350186278640545}
-  - {fileID: 9131791938649758535}
-  - {fileID: 2400366622022189940}
-  - {fileID: 4531074353051350357}
-  - {fileID: 640819044249567570}
-  - {fileID: 9150835148623189257}
-  - {fileID: 7163973195534740115}
-  - {fileID: 5993176552670831254}
-  soldierTypes: []
   audioSource: {fileID: -2444514055516699275}
   placementParticleEffect: {fileID: 8203871183687262689}
 --- !u!61 &6675910455318538682
@@ -770,7 +750,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed04e6cce4f60640973abeabdf67f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingName: Barrack
+  buildImage: {fileID: 6632033533662013603}
+  productImage: {fileID: 7128901832523780806, guid: ee0fc0b702bc46e429a57c43d5e2fe74, type: 3}
+  dimensions: {x: 4, y: 4}
   healthBar: {fileID: 0}
+  soldierTypes: []
+  spawnPoints:
+  - {fileID: 7502140373286621284}
+  - {fileID: 1968036517374407540}
+  - {fileID: 3955409444702812373}
+  - {fileID: 8954619266308544330}
+  - {fileID: 5439569434928775030}
+  - {fileID: 1477932905526630924}
+  - {fileID: 6496350186278640545}
+  - {fileID: 9131791938649758535}
+  - {fileID: 2400366622022189940}
+  - {fileID: 4531074353051350357}
+  - {fileID: 640819044249567570}
+  - {fileID: 9150835148623189257}
+  - {fileID: 7163973195534740115}
+  - {fileID: 5993176552670831254}
 --- !u!82 &-2444514055516699275
 AudioSource:
   m_ObjectHideFlags: 0

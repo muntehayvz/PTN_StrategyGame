@@ -441,12 +441,6 @@ MonoBehaviour:
   area:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 3, y: 2, z: 1}
-  buildingName: Power Plant
-  buildImage: {fileID: 6421557827229800152}
-  productImage: {fileID: 0}
-  dimensions: {x: 3, y: 2}
-  spawnPoints: []
-  soldierTypes: []
   audioSource: {fileID: 8126458155719062108}
   placementParticleEffect: {fileID: 6608788053580981941}
 --- !u!61 &5006487362835404163
@@ -487,6 +481,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88329f7730b210f41bd66ac199d7af7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingName: PowerPlant
+  buildImage: {fileID: 6421557827229800152}
+  dimensions: {x: 3, y: 2}
   healthBar: {fileID: 0}
 --- !u!82 &8126458155719062108
 AudioSource:

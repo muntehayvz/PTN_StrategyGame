@@ -544,8 +544,8 @@ GameObject:
   - component: {fileID: 998410139}
   - component: {fileID: 50268347241252747}
   - component: {fileID: 998410138}
-  - component: {fileID: 1829202627242771874}
   - component: {fileID: -2672451507568175898}
+  - component: {fileID: -4053554058644496008}
   m_Layer: 1
   m_Name: SoldierPrefab
   m_TagString: Soldier
@@ -636,7 +636,7 @@ MonoBehaviour:
     maximumInterval: 2
     visualizeSensitivity: 0
   canMove: 1
-  speed: 3
+  speed: 2
   orientation: 1
   enableRotation: 0
   rotationSpeed: 0.59
@@ -697,27 +697,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.29808784, y: 0.31620765}
   m_EdgeRadius: 0
---- !u!114 &1829202627242771874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7128901832523780806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 459ec27ab6e65a54ea2007fcf0d5213a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  area:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 1, y: 1, z: 1}
-  buildingName: Soldier
-  buildImage: {fileID: 730857208123867739, guid: d617b139328c71548930a78e480c4b44, type: 3}
-  productImage: {fileID: 0}
-  dimensions: {x: 1, y: 1}
-  spawnPoints: []
-  soldierTypes: []
 --- !u!50 &-2672451507568175898
 Rigidbody2D:
   serializedVersion: 4
@@ -739,6 +718,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &-4053554058644496008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128901832523780806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7758627c4edcc584cb8599c084331874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingName: Soldier
+  buildImage: {fileID: 730857208123867739, guid: d617b139328c71548930a78e480c4b44, type: 3}
+  dimensions: {x: 1, y: 1}
+  healthBar: {fileID: 0}
 --- !u!1 &8537634767366211815
 GameObject:
   m_ObjectHideFlags: 0

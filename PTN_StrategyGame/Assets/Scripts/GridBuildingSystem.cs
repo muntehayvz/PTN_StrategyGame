@@ -23,11 +23,14 @@ public class GridBuildingSystem : MonoBehaviour
     private GameObject buildingPrefab; // Yerleştirilecek objenin prefabı
     private UnityEngine.Vector3 targetPosition;
     [SerializeField] GameObject cannotPlaceText;
+    private BuildingFactory buildingFactory;
+
 
     #region Unity Methods
     private void Awake()
     {
         instance = this;
+        buildingFactory= gameObject.AddComponent<BuildingFactory>();
     }
 
     void Start()
@@ -140,7 +143,7 @@ public class GridBuildingSystem : MonoBehaviour
         if (!isPlaced) // Eğer henüz bir bina yerleştirilmediyse...
         {
             this.buildingPrefab = buildingPrefab;
-            temp = Instantiate(buildingPrefab, UnityEngine.Vector3.zero, UnityEngine.Quaternion.identity).GetComponent<Building>();
+            temp = buildingFactory.CreateBuilding(buildingPrefab);
 
             FollowBuilding();
 
