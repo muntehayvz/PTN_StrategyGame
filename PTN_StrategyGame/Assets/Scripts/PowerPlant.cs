@@ -11,13 +11,14 @@ public class PowerPlant : IBuilding
 
     public override void DisplayInfo()
     {
-        Debug.Log("PowerPlant: HP - " + healthPoints);
+        Debug.Log(buildingName+ ": HP - " + healthPoints);
     }
 
     private void OnMouseDown()
     {
         Debug.Log("Bina Adı: " + buildingName);
 
+        // Update the UI with the building's name and image
         UIManager.Instance.UpdateBuildingNameAndImage(buildingName, buildImage.GetComponent<SpriteRenderer>());
     }
 }

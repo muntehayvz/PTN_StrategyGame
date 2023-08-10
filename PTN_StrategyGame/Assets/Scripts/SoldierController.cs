@@ -19,6 +19,7 @@ public class SoldierController : MonoBehaviour
     private static SoldierController instance;
     public static SoldierController Instance
     {
+        // Get the SoldierController instance if not assigned
         get
         {
             if (instance == null)
@@ -29,16 +30,24 @@ public class SoldierController : MonoBehaviour
         }
     }
 
+    // Initialize the soldier with its type's attributes
+    public void Initialize(Soldier soldierType)
+    {
+        soldierData = soldierType;
+
+        HealthPoints = soldierData.HealthPoints;
+        AttackDamage = soldierData.AttackDamage;
+    }
 
     private void Awake()
     {
-        healthBar = GetComponentInChildren<HealthBar>();
-        canAttack= false;
+        healthBar = GetComponentInChildren<HealthBar>(); // Get the health bar component from child objects
+        canAttack = false; // Disable attack by default
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1)) // Sadece sağ tıklama ile saldırı
+        if (Input.GetMouseButtonDown(1)) // Perform attack only on right mouse click
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
@@ -56,10 +65,10 @@ public class SoldierController : MonoBehaviour
 
                         SetTargetBarracks(targetBarracks);
                         SetTargetPowerPlant(targetPowerPlant);
-                        Attack();
+                        Attack(); // Initiate the attack
                     }
                 }
-                if(canAttack)
+                if (canAttack)
                 {
                     SoldierController targetSoldier = hit.collider.GetComponent<SoldierController>();
                     if (targetSoldier != null && targetSoldier != this)
@@ -70,12 +79,11 @@ public class SoldierController : MonoBehaviour
                         // Check if the distance is within attack range
                         if (distance <= 0.4f)
                         {
-                            anim.SetBool("isShooting", true);
+                            anim.SetBool("isShooting", true); // Play shooting animation
                             StartCoroutine(ResetShootingAnimation());
 
                             // Inflict damage on the target soldier
                             targetSoldier.TakeDamage(AttackDamage);
-
                         }
                         else
                         {
@@ -87,62 +95,60 @@ public class SoldierController : MonoBehaviour
         }
     }
 
+    // Set the target barracks for attack
     public void SetTargetBarracks(Barracks barracks)
     {
         targetBarracks = barracks;
     }
+
+    // Set the target power plant for attack
     public void SetTargetPowerPlant(PowerPlant powerPlant)
     {
         targetPowerPlant = powerPlant;
     }
-    public void Initialize(Soldier soldierType)
-    {
-        soldierData = soldierType;
 
-        HealthPoints = soldierData.HealthPoints;
-        AttackDamage = soldierData.AttackDamage;
-    }
-
+    // Enable the soldier's ability to attack
     public void EnableAttack()
     {
         canAttack = true;
     }
 
+    // Disable the soldier's ability to attack
     public void DisableAttack()
     {
         canAttack = false;
     }
 
-
+    // Perform the attack on the targeted buildings
     private void Attack()
     {
         Debug.Log("Attacking with damage: " + soldierData.AttackDamage);
         if (targetBarracks != null)
         {
-            targetBarracks.GetDamage(AttackDamage);
-            Debug.Log("barrack health: "+targetBarracks.GetHealth());
+            targetBarracks.GetDamage(AttackDamage); // Inflict damage on the targeted barracks
+            Debug.Log("Barrack health: " + targetBarracks.GetHealth());
         }
         if (targetPowerPlant != null)
         {
-            targetPowerPlant.GetDamage(AttackDamage);
-            Debug.Log("powerplant health: " + targetPowerPlant.GetHealth());
+            targetPowerPlant.GetDamage(AttackDamage); // Inflict damage on the targeted power plant
+            Debug.Log("Power plant health: " + targetPowerPlant.GetHealth());
         }
     }
 
-
+    // Inflict damage on the soldier and update health bar
     public void TakeDamage(int damage)
     {
-
-        Debug.Log("taking damage: "+ soldierData.HealthPoints);
+        Debug.Log("Taking damage: " + soldierData.HealthPoints);
         HealthPoints -= damage;
         healthBar.UpdateHealthBar(HealthPoints, soldierData.HealthPoints);
 
         if (HealthPoints <= 0)
         {
-            Die();
+            Die(); // Initiate the death process
         }
     }
 
+    // Perform death actions and destroy the soldier
     private void Die()
     {
         Debug.Log("Soldier died.");
@@ -150,11 +156,13 @@ public class SoldierController : MonoBehaviour
         StartCoroutine(DeathAnimation());
     }
 
+    // Calculate and return the percentage of health remaining
     public float GetHealthPercent()
     {
         return (float)HealthPoints / this.soldierData.HealthPoints;
     }
 
+    // Reset the shooting animation after a delay
     private IEnumerator ResetShootingAnimation()
     {
         // Wait for a short delay
@@ -164,11 +172,11 @@ public class SoldierController : MonoBehaviour
         anim.SetBool("isShooting", false);
     }
 
+    // Initiate the death animation and destroy the soldier
     private IEnumerator DeathAnimation()
     {
         yield return new WaitForSeconds(deathDelay);
 
-        Destroy(gameObject);
+        Destroy(gameObject); // Destroy the soldier GameObject
     }
-
 }

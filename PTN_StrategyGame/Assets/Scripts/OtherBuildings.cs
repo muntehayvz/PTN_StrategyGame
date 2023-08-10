@@ -7,7 +7,7 @@ public class OtherBuildings : IBuilding
     protected override void Awake()
     {
         //healthPoints = MaxHealthPoints = 20;
-        base.Awake();
+        base.Awake(); // Call the base class's Awake method to initialize common variables
     }
 
     public override void DisplayInfo()
@@ -19,6 +19,7 @@ public class OtherBuildings : IBuilding
     {
         Debug.Log("Bina Adı: " + buildingName);
 
+        // Update the UI with the building's name and image
         UIManager.Instance.UpdateBuildingNameAndImage(buildingName, buildImage.GetComponent<SpriteRenderer>());
     }
 }

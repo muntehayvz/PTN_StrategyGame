@@ -18,9 +18,9 @@ public class GridBuildingSystem : MonoBehaviour
     private UnityEngine.Vector3 prevPos;
     private BoundsInt prevArea;
 
-    private bool isPlaced = false; // Başlangıçta henüz bir bina yerleştirilmediği varsayılır.
-    private bool isPlacing = false; // Tıklanarak yerleştirme modunu temsil eder
-    private GameObject buildingPrefab; // Yerleştirilecek objenin prefabı
+    private bool isPlaced = false;
+    private bool isPlacing = false; 
+    private GameObject buildingPrefab;
     private UnityEngine.Vector3 targetPosition;
     [SerializeField] GameObject cannotPlaceText;
     private BuildingFactory buildingFactory;
@@ -56,15 +56,16 @@ public class GridBuildingSystem : MonoBehaviour
 
         if (isPlacing)
         {
-            HandleObjectPlacement();
+            HandleObjectPlacement(); // If currently placing a building, handle building placement logic
         }
-        else if (Input.GetMouseButtonDown(0)) // Eğer butona basılmışsa
+
+        // Check if left mouse button is clicked
+        else if (Input.GetMouseButtonDown(0))
         {
             if (!EventSystem.current.IsPointerOverGameObject(0))
             {
                 UnityEngine.Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 targetPosition = gridLayout.CellToLocalInterpolated(gridLayout.WorldToCell(touchPos));
-                //isPlacing = true;
             }
         }
     }
@@ -72,6 +73,8 @@ public class GridBuildingSystem : MonoBehaviour
     #endregion
 
     #region Tile Management
+
+    // Gets an array of tile bases within a given area
     private static TileBase[] GetTilesBlock(BoundsInt area, Tilemap tilemap)
     {
         TileBase[] array = new TileBase[area.size.x * area.size.y * area.size.z]; 
@@ -84,6 +87,7 @@ public class GridBuildingSystem : MonoBehaviour
         }
         return array;
     }
+    // Sets a block of tiles within a given area to a specified tile type
     private static void SetTilesBlock(BoundsInt area, TileType type, Tilemap tilemap)
     {
         int size = area.size.x * area.size.y * area.size.z; 
@@ -91,6 +95,8 @@ public class GridBuildingSystem : MonoBehaviour
         FillTiles(tileArray, type); 
         tilemap.SetTilesBlock(area, tileArray);
     }
+
+    // Fills an array of tile bases with a specified tile type
     private static void FillTiles(TileBase[] arr, TileType type)
     {
         for(int i = 0; i<arr.Length; i++) 
@@ -99,11 +105,11 @@ public class GridBuildingSystem : MonoBehaviour
         }
     }
 
-
     #endregion
 
     #region Building Placement
 
+    // Handle the logic for placing a building, updating its position, and responding to key inputs
     private void HandleObjectPlacement()
     {
         if (!temp)
@@ -117,7 +123,7 @@ public class GridBuildingSystem : MonoBehaviour
         if (prevPos != cellPos)
         {
             temp.transform.localPosition = gridLayout.CellToLocalInterpolated(cellPos
-                + new UnityEngine.Vector3(.5f, .5f, 0f)); //Vector
+                + new UnityEngine.Vector3(.5f, .5f, 0f)); 
             prevPos = cellPos;
             FollowBuilding();
         }
@@ -127,30 +133,32 @@ public class GridBuildingSystem : MonoBehaviour
             if (temp.CanBePlaced())
             {
                 temp.Place();
-                isPlacing = false; // Yerleştirme modunu kapat
+                isPlacing = false; 
             }
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             ClearArea();
             Destroy(temp.gameObject);
-            isPlacing = false; // Yerleştirme modunu kapat
+            isPlacing = false;
         }
     }
 
+    // Start placing a building by instantiating it and preparing for placement
     public void StartPlacing(GameObject buildingPrefab)
     {
-        if (!isPlaced) // Eğer henüz bir bina yerleştirilmediyse...
+        if (!isPlaced)
         {
             this.buildingPrefab = buildingPrefab;
             temp = buildingFactory.CreateBuilding(buildingPrefab);
 
             FollowBuilding();
 
-            isPlacing = true; // Yerleştirme modunu aç
+            isPlacing = true; 
         }
     }
 
+    // Clears the area on the temporary tilemap that represents the potential building placement
     public void ClearArea()
     {
         TileBase[] toClear = new TileBase[prevArea.size.x * prevArea.size.y * prevArea.size.z];
@@ -158,6 +166,7 @@ public class GridBuildingSystem : MonoBehaviour
         TempTilemap.SetTilesBlock(prevArea, toClear);
     }
 
+    // Updates the temporary tilemap based on the building's position and neighboring tiles
     private void FollowBuilding()
     {
         ClearArea();
@@ -179,11 +188,11 @@ public class GridBuildingSystem : MonoBehaviour
                 break;
             }
         }
-
         TempTilemap.SetTilesBlock(buildingArea, tileArray);
         prevArea = buildingArea;
     }
 
+    // Checks if a given area is valid for building placement
     public bool CanTakeArea(BoundsInt area)
     {
         TileBase[] baseArr = GetTilesBlock(area, MainTilemap);
@@ -200,16 +209,21 @@ public class GridBuildingSystem : MonoBehaviour
         return true;
     }
 
+    // Coroutine to disables the "cannot place here" text after a short delay
     private IEnumerator DisableText()
     {
         yield return new WaitForSeconds(1f);
         cannotPlaceText.SetActive(false);
     }
+
+    // Sets the tiles in the area to be taken by a building on the main tilemap
     public void TakeArea(BoundsInt area)
     {
         SetTilesBlock(area, TileType.Empty, TempTilemap);
         SetTilesBlock(area, TileType.Green, MainTilemap);
     }
+
+    // Clears a specified area on the main tilemap
     public void ClearTilemapArea(BoundsInt area)
     {
         TileBase[] toClear = new TileBase[area.size.x * area.size.y * area.size.z];
@@ -219,6 +233,7 @@ public class GridBuildingSystem : MonoBehaviour
 
     #endregion
 
+    // Enum defining different types of tiles
     public enum TileType
     {
         Empty,
@@ -226,6 +241,4 @@ public class GridBuildingSystem : MonoBehaviour
         Green,
         Red
     }
-
-
 }

@@ -4,54 +4,59 @@ using UnityEngine;
 [System.Serializable]
 public class PoolManager
 {
-	private readonly List<GameObject> _units = new List<GameObject>();
+	private readonly List<GameObject> pooledObjects = new List<GameObject>();
         
-	private readonly List<GameObject> _objectsInPool = new List<GameObject>();
+	private readonly List<GameObject> inactiveObjects = new List<GameObject>();
 
-	public PoolManager()
+    // Constructor: Initializes tags for inactive objects
+    public PoolManager()
 	{
-		for (var index = 0; index < _objectsInPool.Count; index++)
+		for (var index = 0; index < inactiveObjects.Count; index++)
 		{
-			_objectsInPool[index].tag = index.ToString();
+			inactiveObjects[index].tag = index.ToString();
 		}
 	}
 
-	public void SetUnits(List<GameObject> units)
+    // Sets the list of pooled objects for object reuse
+    public void SetPooledObjects(List<GameObject> units)
 	{
-		_units.Clear();
+		this.pooledObjects.Clear();
 		foreach (var unit in units)
 		{
-			_units.Add(unit);
+			this.pooledObjects.Add(unit);
 		}
 	}
-        
-	public void AddObjectToPool(GameObject gameObject)
+
+    // Deactivates and adds a game object to the pool of inactive objects.
+    public void AddObjectToPool(GameObject gameObject)
 	{
 		gameObject.SetActive(false);
-		_objectsInPool.Add(gameObject);
+		inactiveObjects.Add(gameObject);
 	}
 
-	public GameObject GetObjectFromPool(int index)
+    // Retrieves an inactive object from the pool based on index, activates it, and returns it
+    // If no matching inactive object is found, creates and returns a new instance
+    public GameObject GetObjectFromPool(int index)
 	{ 
-		foreach (var item in _objectsInPool)
+		foreach (var item in inactiveObjects)
 		{
-			if (item.name.Equals(_units[index].name))
+			if (item.name.Equals(pooledObjects[index].name))
 			{
 				item.SetActive(true);
-				_objectsInPool.Remove(item);
+				inactiveObjects.Remove(item);
 				return item;
 			}
 		}
 
-		var gameObject = Object.Instantiate(_units[index]);
-		gameObject.name = _units[index].name;
-		gameObject.SetActive(true);
-		return gameObject;
+		var newObj = Object.Instantiate(pooledObjects[index]);
+		newObj.name = pooledObjects[index].name;
+		newObj.SetActive(true);
+		return newObj;
 
 	}
-
-	public int GetObjectCount()
+    // Returns the size of the pooled objects list
+    public int GetPoolSize()
 	{
-		return _units.Count;
+		return pooledObjects.Count;
 	}
 }

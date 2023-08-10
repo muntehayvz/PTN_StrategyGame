@@ -20,6 +20,7 @@ public class Building : MonoBehaviour
         }
     }
 
+    // Check if the building can be placed in its current position on the grid
     public bool CanBePlaced()
     {
         Vector3Int positionInt = GridBuildingSystem.instance.gridLayout.LocalToCell(transform.position);
@@ -29,11 +30,11 @@ public class Building : MonoBehaviour
         if (GridBuildingSystem.instance.CanTakeArea(areaTemp))
         {
             return true;
-
         }
         return false;
     }
 
+    // Place the building on the grid
     public void Place()
     {
         Vector3Int positionInt = GridBuildingSystem.instance.gridLayout.LocalToCell(transform.position);
@@ -41,15 +42,16 @@ public class Building : MonoBehaviour
         areaTemp.position = positionInt;
 
         Placed = true;
-        GridBuildingSystem.instance.TakeArea(areaTemp);
-        AstarPath.active.Scan();
+        GridBuildingSystem.instance.TakeArea(areaTemp); // Occupy grid cells in the area
+        AstarPath.active.Scan(); // Update pathfinding graph
         if (audioSource != null)
         {
-            audioSource.Play();
+            audioSource.Play(); // Play placement sound
         }
-        TriggerPlacementParticleEffect();
+        TriggerPlacementParticleEffect(); // Trigger placement particle effect
     }
 
+    // Trigger the particle effect for building placement
     private void TriggerPlacementParticleEffect()
     {
         if (placementParticleEffect != null)
@@ -62,6 +64,8 @@ public class Building : MonoBehaviour
             }
         }
     }
+
+    // Destroy the particle effect after it has finished playing
     private IEnumerator DestroyParticleEffectAfterPlay(ParticleSystem particleSystem)
     {
         yield return new WaitForSeconds(2f);
@@ -70,6 +74,7 @@ public class Building : MonoBehaviour
         Destroy(particleSystem.gameObject);
     }
 
+    // Clear grid area when the building is destroyed
     private void OnDestroy()
     {
         if (Placed && GridBuildingSystem.instance != null)
@@ -77,7 +82,5 @@ public class Building : MonoBehaviour
             GridBuildingSystem.instance.ClearTilemapArea(area);
         }
     }
-
     #endregion
-
 }

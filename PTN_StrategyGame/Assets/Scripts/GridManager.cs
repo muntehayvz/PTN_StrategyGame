@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
@@ -9,18 +8,19 @@ public class GridManager : MonoBehaviour
     private int width, height;
 
     [SerializeField]
-    private Tile tilePrefab;
+    private GameObject tilePrefab;
 
     private Transform gridContainer;
 
     private void Start()
     {
-        gridContainer = new GameObject("Grid Container").transform;
-        gridContainer.parent = transform; // GridManager'ın alt nesnesi olarak ayarlanır.
+        gridContainer = new GameObject("Grid Container").transform; // Create a container for the grid tiles
+        gridContainer.parent = transform;
 
-        GenerateGrid();
+        GenerateGrid(); // Generate the grid of tiles
     }
 
+    // Generates a grid of tiles based on specified dimensions and prefab
     void GenerateGrid()
     {
         float halfTileSize = 0.27f;
@@ -29,15 +29,11 @@ public class GridManager : MonoBehaviour
         {
             for (int j = 0; j < height * 2; j++)
             {
-                var spawnedTile = Instantiate(tilePrefab, new Vector3(i * halfTileSize, j * halfTileSize), Quaternion.identity);
-                spawnedTile.name = $"Tile {i} {j}";
-                spawnedTile.transform.parent = gridContainer; // Oluşturulan Tile nesnesi, alt nesne olarak ayarlanır.
-                //spawnedTile.Init(isOffset);
+                var position = new Vector3(i * halfTileSize, j * halfTileSize); // Calculate tile position
+                var spawnedTile = Instantiate(tilePrefab, position, Quaternion.identity); // Instantiate a tile
+                spawnedTile.name = $"Tile {i} {j}"; // Set tile name
+                spawnedTile.transform.parent = gridContainer; // Set tile as a child of the container
             }
         }
-
-        float targetOrthoSize = Mathf.Max((float)width, (float)height) * halfTileSize;
-        float targetX = ((float)width - 1) * halfTileSize;
-        float targetY = ((float)height - 1) * halfTileSize;
     }
 }

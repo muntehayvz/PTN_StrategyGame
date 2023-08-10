@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     private static UIManager instance;
     public static UIManager Instance
     {
+        // Get the UIManager instance if not assigned
         get
         {
             if (instance == null)
@@ -31,15 +32,17 @@ public class UIManager : MonoBehaviour
         productionRenderer.sprite = null;
     }
 
+    // Update the building name and image in the UI
     public void UpdateBuildingNameAndImage(string buildingName, SpriteRenderer buildingImage)
     {
-
+        // Update building name and image if provided
         if (buildingName != null && buildingImage != null)
         {
             buildingNameText.text = buildingName;
             buildingImageRenderer.sprite = buildingImage.sprite;
         }
 
+        // Activate production menu if the building is a "Barrack," otherwise deactivate it
         if (buildingName == "Barrack")
         {
             productionMenu.SetActive(true);
@@ -50,6 +53,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Update the production image in the UI
     public void UpdateProductionImage(SpriteRenderer production)
     {
         if (productionRenderer != null)
@@ -57,10 +61,14 @@ public class UIManager : MonoBehaviour
             productionRenderer.sprite = production.sprite;
         }
     }
+
+    // Clear the production image in the UI
     public void ClearProductionImage()
     {
         productionRenderer.sprite = null;
     }
+
+    // Update the UI with soldier information
     public void UpdateSoldierInfo(string soldierName)
     {
         buildingNameText.text = soldierName;

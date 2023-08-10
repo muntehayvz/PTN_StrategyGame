@@ -669,6 +669,7 @@ GameObject:
   - component: {fileID: 6675910455318538682}
   - component: {fileID: 2545468796282427874}
   - component: {fileID: -2444514055516699275}
+  - component: {fileID: -8599639169698197352}
   m_Layer: 1
   m_Name: Barrack Prefab
   m_TagString: Building
@@ -752,7 +753,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingName: Barrack
   buildImage: {fileID: 6632033533662013603}
-  productImage: {fileID: 7128901832523780806, guid: ee0fc0b702bc46e429a57c43d5e2fe74, type: 3}
   dimensions: {x: 4, y: 4}
   healthBar: {fileID: 0}
   soldierTypes: []
@@ -771,6 +771,7 @@ MonoBehaviour:
   - {fileID: 9150835148623189257}
   - {fileID: 7163973195534740115}
   - {fileID: 5993176552670831254}
+  productImage: {fileID: 7128901832523780806, guid: ee0fc0b702bc46e429a57c43d5e2fe74, type: 3}
 --- !u!82 &-2444514055516699275
 AudioSource:
   m_ObjectHideFlags: 0
@@ -783,7 +784,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c78e13cef564aec458ecea69dcd03c2d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -867,6 +868,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-8599639169698197352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6276474226432476856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb2a181a09d03d4c99bfeeb0e5cdad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soldierPrefab: {fileID: 7128901832523780806, guid: ee0fc0b702bc46e429a57c43d5e2fe74, type: 3}
 --- !u!1 &6320120941701172085
 GameObject:
   m_ObjectHideFlags: 0

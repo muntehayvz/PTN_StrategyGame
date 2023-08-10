@@ -21,15 +21,17 @@ public class UnitRTS : MonoBehaviour
         FlipCharacter(false);
     }
 
-    public void FlipCharacter(bool visible)
+    // Enable or disable character flipping based on selected units
+    public void FlipCharacter(bool selected)
     {
         if (selectedGameObject != null)
         {
-            characterFlip.enabled = visible;
+            characterFlip.enabled = selected;
         }
     }
 
-        public void SetSelectedVisible(bool visible)
+    // Set the visibility of the selected game object indicator
+    public void SetSelectedVisible(bool visible)
     {
         if (selectedGameObject != null)
         {
@@ -37,23 +39,25 @@ public class UnitRTS : MonoBehaviour
         }
     }
 
-    public void MoveTo(Transform targetPosition) // Hedef konumu Vector3 olarak alalım
+    // Move the unit to the specified target position
+    public void MoveTo(Transform targetPosition)
     {
         if (movePosition != null)
         {
-            movePosition.SetMovePosition(targetPosition);
+            movePosition.SetMovePosition(targetPosition); // Set the move position for pathfinding
         }
     }
 
+    // Check if the unit has arrived at its destination
     public bool IsArrived()
     {
         if (ai != null)
         {
             if (ai.reachedEndOfPath && !ai.reachedDestination)
             {
-                return true;
+                return true; // Return true if the unit has reached its path end but not its final destination
             }
         }
-        return false;
+        return false; // Return false if the unit has not yet arrived
     }
 }
