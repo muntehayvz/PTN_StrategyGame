@@ -11,7 +11,7 @@ public class UIController : MonoBehaviour
         // Initializes the model and view references
         model = new UIModel();
         view = GetComponent<UIView>();
-
+        model.BuildingName = "Building Name";
         // Hides the production menu and update the initial building UI
         view.HideProductionMenu();
         view.UpdateBuildingUI(model);
