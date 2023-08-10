@@ -65,6 +65,10 @@ public class SoldierController : MonoBehaviour
 
                         SetTargetBarracks(targetBarracks);
                         SetTargetPowerPlant(targetPowerPlant);
+
+                        anim.SetBool("isShooting", true); // Play shooting animation
+                        StartCoroutine(ResetShootingAnimation());
+
                         Attack(); // Initiate the attack
                     }
                 }

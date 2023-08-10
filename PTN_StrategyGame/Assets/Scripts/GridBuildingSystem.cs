@@ -19,7 +19,7 @@ public class GridBuildingSystem : MonoBehaviour
     private BoundsInt prevArea;
 
     private bool isPlaced = false;
-    private bool isPlacing = false; 
+    public bool isPlacing = false; 
     private GameObject buildingPrefab;
     private UnityEngine.Vector3 targetPosition;
     [SerializeField] GameObject cannotPlaceText;

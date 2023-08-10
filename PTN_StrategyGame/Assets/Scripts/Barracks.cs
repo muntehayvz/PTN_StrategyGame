@@ -17,7 +17,6 @@ public class Barracks : IBuilding
 
         buildingName = "Barrack";
         healthPoints = MaxHealthPoints = 100;
-
         InitializeSoldierTypes();
 
         // Creating a factory to produce soldiers using a prefab
@@ -47,14 +46,16 @@ public class Barracks : IBuilding
 
     private void OnMouseDown()
     {
-        // Handling mouse click on the barracks
-        UIController uiController = FindObjectOfType<UIController>();
-        Debug.Log("barracks");
-        uiController.HandleBuildingSelection(buildingName, buildImage.GetComponent<SpriteRenderer>().sprite);
-        uiController.HandleProductionImageUpdate(productImage.GetComponent<SpriteRenderer>().sprite);
+        if (!GridBuildingSystem.instance.isPlacing)
+        {
+            // Handling mouse click on the barracks
+            UIController uiController = FindObjectOfType<UIController>();
+            Debug.Log("barracks");
+            uiController.HandleBuildingSelection(buildingName, buildImage.GetComponent<SpriteRenderer>().sprite);
+            uiController.HandleProductionImageUpdate(productImage.GetComponent<SpriteRenderer>().sprite);
 
-        // Handling mouse click on the barracks
-        soldierSpawner.SpawnRandomSoldier();
+            // Handling mouse click on the barracks
+            soldierSpawner.SpawnRandomSoldier();
+        }
     }
-
 }
