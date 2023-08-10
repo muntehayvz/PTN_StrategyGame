@@ -18,7 +18,6 @@ public class GridBuildingSystem : MonoBehaviour
     private UnityEngine.Vector3 prevPos;
     private BoundsInt prevArea;
 
-    private bool isPlaced = false;
     public bool isPlacing = false; 
     private GameObject buildingPrefab;
     private UnityEngine.Vector3 targetPosition;
@@ -148,7 +147,7 @@ public class GridBuildingSystem : MonoBehaviour
     // Start placing a building by instantiating it and preparing for placement
     public void StartPlacing(GameObject buildingPrefab)
     {
-        if (!isPlaced)
+        if (!isPlacing)
         {
             this.buildingPrefab = buildingPrefab;
             temp = buildingFactory.CreateBuilding(buildingPrefab);

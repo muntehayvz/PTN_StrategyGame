@@ -238,10 +238,12 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Build - space
 
+    Cancel Building - esc
+
     Attack & Move- right click
 
-    Show Information -
-    left click'
+    Show
+    Information - left click'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 69d0e2e59ce701d40b6ab4a6b23799b4, type: 2}
   m_sharedMaterial: {fileID: 2466372021128269970, guid: 69d0e2e59ce701d40b6ab4a6b23799b4, type: 2}
