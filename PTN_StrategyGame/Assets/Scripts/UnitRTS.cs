@@ -10,6 +10,8 @@ public class UnitRTS : MonoBehaviour
     private CharacterFlip characterFlip;
     IAstarAI ai;
 
+    public AudioSource soldierClickSound;
+
     private void Awake()
     {
         ai = GetComponent<IAstarAI>(); 
@@ -36,9 +38,16 @@ public class UnitRTS : MonoBehaviour
         if (selectedGameObject != null)
         {
             selectedGameObject.SetActive(visible);
+            if(visible)
+            {
+                PlaySoldierClickSound();
+            }
         }
     }
-
+    public void PlaySoldierClickSound()
+    {
+        soldierClickSound.Play();
+    }
     // Move the unit to the specified target position
     public void MoveTo(Transform targetPosition)
     {

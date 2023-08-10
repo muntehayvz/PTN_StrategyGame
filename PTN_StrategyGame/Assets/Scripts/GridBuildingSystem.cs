@@ -25,6 +25,7 @@ public class GridBuildingSystem : MonoBehaviour
     [SerializeField] GameObject cannotPlaceText;
     private BuildingFactory buildingFactory;
 
+    public AudioSource buttonClickSound;
 
     #region Unity Methods
     private void Awake()
@@ -151,11 +152,17 @@ public class GridBuildingSystem : MonoBehaviour
         {
             this.buildingPrefab = buildingPrefab;
             temp = buildingFactory.CreateBuilding(buildingPrefab);
+            
+            PlayButtonClickSound();
 
             FollowBuilding();
-
             isPlacing = true; 
         }
+    }
+
+    public void PlayButtonClickSound()
+    {
+        buttonClickSound.Play();
     }
 
     // Clears the area on the temporary tilemap that represents the potential building placement
