@@ -1568,10 +1568,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GridManager
       objectReference: {fileID: 0}
-    - target: {fileID: 8591322301378168647, guid: e2a35914221cd374c8fcdd9f40561755, type: 3}
-      propertyPath: tilePrefab
-      value: 
-      objectReference: {fileID: 2945385368399838186, guid: ec1003ecda28a2c4dae280c5bac9dfcc, type: 3}
     - target: {fileID: 8591322301378168648, guid: e2a35914221cd374c8fcdd9f40561755, type: 3}
       propertyPath: m_RootOrder
       value: 3

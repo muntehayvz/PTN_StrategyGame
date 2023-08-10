@@ -771,7 +771,7 @@ MonoBehaviour:
   - {fileID: 9150835148623189257}
   - {fileID: 7163973195534740115}
   - {fileID: 5993176552670831254}
-  productImage: {fileID: 7128901832523780806, guid: ee0fc0b702bc46e429a57c43d5e2fe74, type: 3}
+  productImage: {fileID: 730857208123867739, guid: d617b139328c71548930a78e480c4b44, type: 3}
 --- !u!82 &-2444514055516699275
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1192,6 +1192,10 @@ PrefabInstance:
     - target: {fileID: 4327799060953286849, guid: a748c759e1fedf34294045aa21e309ae, type: 3}
       propertyPath: m_Name
       value: Smoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 4327799060953286849, guid: a748c759e1fedf34294045aa21e309ae, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5286858064691101273, guid: a748c759e1fedf34294045aa21e309ae, type: 3}
       propertyPath: m_RootOrder

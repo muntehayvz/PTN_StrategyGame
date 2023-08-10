@@ -20,6 +20,8 @@ public class OtherBuildings : IBuilding
         Debug.Log("Bina Adı: " + buildingName);
 
         // Update the UI with the building's name and image
-        UIManager.Instance.UpdateBuildingNameAndImage(buildingName, buildImage.GetComponent<SpriteRenderer>());
+        UIController uiController = FindObjectOfType<UIController>();
+
+        uiController.HandleBuildingSelection(buildingName, buildImage.GetComponent<SpriteRenderer>().sprite);
     }
 }

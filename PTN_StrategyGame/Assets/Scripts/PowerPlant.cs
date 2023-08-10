@@ -7,7 +7,7 @@ public class PowerPlant : IBuilding
         buildingName = "PowerPlant";
         healthPoints = MaxHealthPoints = 50;
         base.Awake();
-    }
+    }   
 
     public override void DisplayInfo()
     {
@@ -19,6 +19,8 @@ public class PowerPlant : IBuilding
         Debug.Log("Bina Adı: " + buildingName);
 
         // Update the UI with the building's name and image
-        UIManager.Instance.UpdateBuildingNameAndImage(buildingName, buildImage.GetComponent<SpriteRenderer>());
+        UIController uiController = FindObjectOfType<UIController>();
+
+        uiController.HandleBuildingSelection(buildingName, buildImage.GetComponent<SpriteRenderer>().sprite);
     }
 }

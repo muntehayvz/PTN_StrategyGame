@@ -48,10 +48,13 @@ public class Barracks : IBuilding
     private void OnMouseDown()
     {
         // Handling mouse click on the barracks
-        UIManager.Instance.UpdateBuildingNameAndImage(buildingName, buildImage.GetComponent<SpriteRenderer>());
-        UIManager.Instance.UpdateProductionImage(productImage.GetComponentInChildren<SpriteRenderer>());
+        UIController uiController = FindObjectOfType<UIController>();
+        Debug.Log("barracks");
+        uiController.HandleBuildingSelection(buildingName, buildImage.GetComponent<SpriteRenderer>().sprite);
+        uiController.HandleProductionImageUpdate(productImage.GetComponent<SpriteRenderer>().sprite);
 
         // Handling mouse click on the barracks
         soldierSpawner.SpawnRandomSoldier();
     }
+
 }
